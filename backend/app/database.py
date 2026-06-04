@@ -2,7 +2,11 @@ import sqlite3
 import os
 from contextlib import contextmanager
 
-DB_PATH = os.environ.get("DB_PATH", "/app/data/exam.db")
+_DEFAULT_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "exam.db")
+DB_PATH = os.environ.get("DB_PATH", _DEFAULT_DB)
+# 确保目录存在
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+print(f"[database] DB_PATH = {DB_PATH}")
 
 
 def get_connection():
